@@ -1,29 +1,30 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  Mail,
-  Github,
-  Linkedin,
   ExternalLink,
   ChevronDown,
-  Microscope,
+  ChevronUp,
   Atom,
   Code,
-  Award,
   MapPin,
-  Download,
   ArrowRight,
   FlaskConical,
   BookOpen,
   Cpu,
+  MessageSquare,
+  Target,
+  Activity,
+  Lightbulb,
+  Award
 } from "lucide-react";
 
-type SectionId = "about" | "research" | "skills" | "contact";
+type SectionId = "intro" | "about" | "experiences" | "future" | "contact";
 
 const TABS: { id: SectionId; label: string }[] = [
-  { id: "about", label: "About" },
-  { id: "research", label: "Projects" },
-  { id: "skills", label: "Skills" },
-  { id: "contact", label: "Contact" },
+  { id: "intro", label: "Intro" },
+  { id: "about", label: "About Me" },
+  { id: "experiences", label: "Experiences & Achievements" },
+  { id: "future", label: "Future Goals" },
+  { id: "contact", label: "Contact Info" },
 ];
 
 function useInView(threshold = 0.12) {
@@ -78,94 +79,100 @@ function Reveal({
   );
 }
 
-const projects = [
+const experiences = [
   {
     id: 1,
-    title: "The Midnight Sun — Thermoelectric Generator",
-    category: "Physics · Renewable Energy",
-    description:
-      "Designed a thermoelectric generator that produces electricity at night by harnessing temperature differences between surfaces and the surrounding environment. Won 1st place in the International First Lobachevsky Competition (Lomonosov Moscow State University, Russia), with an invitation to compete in the next round in Russia.",
-    tags: ["Physics", "Thermodynamics", "Renewable Energy", "Engineering"],
-    Icon: Atom,
-    year: "2024",
-    status: "Award Won" as const,
+    title: "India Rising Techventure – Vidyashilp University",
+    category: "Engineering",
+    description: "Secured first place in the India Rising Techventure competition, in a Shark Tank. Our project was based on developing agricultural drones designed to be more accessible and practical for farmers while reducing the manual effort and improving productivity. Developed affordable agricultural drones designed to help farmers monitor crops, and spray fields. The project focused heavily on accessibility and reducing costs compared to existing agricultural drone systems.",
+    tag: "AgriTech",
+    Icon: Cpu,
   },
   {
     id: 2,
-    title: "Eco-Catalyst — Reimagined Car Exhaust System",
+    title: "INSEF (Indian National Science & Engineering Fair)",
     category: "Chemistry",
-    description:
-      "Redesigned the catalytic converter to convert CO₂ emissions into reusable methane fuel, combining pollution reduction with on-board energy recovery. Advanced to Round 2 of INSEF (Indian National Science & Engineering Fair) after clearing the initial selection round.",
-    tags: ["Chemistry", "Catalysis", "Sustainability", "CO₂ Capture"],
+    description: "Successfully cleared the first round of INSEF and progressed to the second round with a project I created called the Eco-Catalyst. The project focused in the field of chemistry on redesigning the catalytic converter system used in car exhausts. Instead of only reducing harmful gases, the Eco-Catalyst aimed to convert carbon dioxide emissions into methane, which could potentially be reused as fuel for the vehicle itself. Participating in the competition gave me exposure to how scientific projects are created in research-focused environments.",
+    tag: "Chemistry",
     Icon: FlaskConical,
-    year: "2024",
-    status: "Advanced" as const,
   },
   {
     id: 3,
-    title: "Agricultural Drone System",
-    category: "Engineering · AgriTech",
-    description:
-      "Developed affordable drones for crop monitoring and field spraying, designed to reduce manual labour and improve accessibility for small-scale farmers. Won 1st place at India Rising Techventure (Vidyashilp University) in a Shark Tank-style competition.",
-    tags: ["Drone Tech", "AgriTech", "Engineering", "Pitching"],
-    Icon: Cpu,
-    year: "2024",
-    status: "Award Won" as const,
-  },
-];
-
-const statusStyles: Record<"Award Won" | "Advanced" | "Participated", string> = {
-  "Award Won": "border-emerald-300/50 text-emerald-700 bg-emerald-50",
-  Advanced: "border-amber-300/50 text-amber-700 bg-amber-50",
-  Participated: "border-border text-muted-foreground bg-muted",
-};
-
-const skillCategories = [
-  {
-    name: "Sciences",
+    title: "The Midnight Sun — Lomonosov Moscow State University",
+    category: "Physics",
+    description: "Won first place in the initial round of an international competition with a project called The Midnight Sun. Built on a strict ₹1,400 budget, this is a thermoelectric generator, focused on physics and generating electricity at night by using temperature differences between surfaces and the surrounding environment. The project explored alternative approaches to renewable energy generation and energy sustainability beyond traditional solar power systems. Following the competition, I was invited to participate in the next round in Russia.",
+    tag: "Physics",
     Icon: Atom,
-    skills: ["Chemistry", "Physics", "Biology", "Astronomy", "Psychology", "AI & Technology"],
   },
   {
-    name: "Creative Arts",
-    Icon: Code,
-    skills: ["Drawing", "Painting", "Textured Art", "Crochet", "Knitting", "Macramé", "Dance", "Piano"],
+    id: 4,
+    title: "Tinkerfest – Chaman Bhartiya School",
+    category: "Innovation",
+    description: "Volunteered at Tinkerfest and also participated by creating a project that received an investment of ₹15,000 in a Shark. The event involved presenting ideas, interacting with judges and participants, and working collaboratively with your teammates. Volunteering also allowed me to observe how large-scale events are organized and managed.",
+    tag: "Leadership",
+    Icon: Lightbulb,
   },
   {
-    name: "Research & Innovation",
-    Icon: FlaskConical,
-    skills: [
-      "Project Design",
-      "Experimental Design",
-      "Pitching & Presenting",
-      "Scientific Writing",
-      "Renewable Energy",
-      "Drone Technology",
-    ],
+    id: 5,
+    title: "Stonehill Science Bowl",
+    category: "Sciences",
+    description: "Participated in the Stonehill Science Bowl, which had fast-paced scientific questioning and collaborative problem solving across multiple areas of science. The competition required quick thinking, teamwork, and the ability to apply scientific knowledge under pressure.",
+    tag: "Sciences",
+    Icon: Atom,
   },
   {
-    name: "Strategy & Leadership",
-    Icon: Microscope,
-    skills: [
-      "Chess",
-      "Debating",
-      "Public Speaking",
-      "Math Tutoring",
-      "Event Volunteering",
-      "Teamwork",
-    ],
+    id: 6,
+    title: "Stonehill Technofest",
+    category: "Technology",
+    description: "Participated in Stonehill Technofest with a project about a smart dog collar capable of detecting seizures in dogs. The collar is designed to monitor changes in movement and behavior patterns that could indicate seizure activity, helping owners respond more quickly during emergencies. Working on the project allowed me to further explore how technology can be applied to health and safety even for animals. This competition showed me how to be able to work under pressure with a time limit.",
+    tag: "Hardware",
+    Icon: Activity,
   },
+  {
+    id: 7,
+    title: "Harvard Crimson Business Competition",
+    category: "Business",
+    description: "Won a Harvard-associated competition and received an invitation related to the event. Successfully cleared the second round of the Harvard Crimson Business Competition and received an invitation to participate in the next round at Harvard University in the United States. Participating in the competition motivated me to continue exploring opportunities that combine innovation, entrepreneurship, and practical problem solving.",
+    tag: "Business",
+    Icon: Award,
+  },
+  {
+    id: 8,
+    title: "Interhouse Debate – Chaman Bhartiya School",
+    category: "Debate",
+    description: "Received the “Best Speaker” award in an interhouse debate competition. This competition improved my ability to present ideas clearly in front of an audience. Winning this made me realize that being confident doesn't mean being sure you're right, it means being okay with saying what you think out loud.",
+    tag: "Public Speaking",
+    Icon: MessageSquare,
+  },
+  {
+    id: 9,
+    title: "CBS Triumph Chess Competition",
+    category: "Strategy",
+    description: "Won second place in the CBS Triumph Chess Competition. Participating in chess competitions are a funny kind of stressful, they are completely silent, and completely in your head. Every mistake is yours. I kind of like that, though.",
+    tag: "Strategy",
+    Icon: Target,
+  },
+  {
+    id: 10,
+    title: "Extra Match Classes",
+    category: "Teaching",
+    description: "Helped teach math concepts to sixth graders after school under the guidance of my math teacher. Teaching younger students helped me better understand mathematical concepts and improve my communication skills.",
+    tag: "Education",
+    Icon: BookOpen,
+  }
 ];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<SectionId>("about");
+  const [activeTab, setActiveTab] = useState<SectionId>("intro");
   const [navSolid, setNavSolid] = useState(false);
   const [heroIn, setHeroIn] = useState(false);
+  const [introOpen, setIntroOpen] = useState(false);
 
   const sectionRefs = useRef<Record<SectionId, HTMLElement | null>>({
+    intro: null,
     about: null,
-    research: null,
-    skills: null,
+    experiences: null,
+    future: null,
     contact: null,
   });
 
@@ -183,7 +190,7 @@ export default function App() {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY + 130;
-      const order: SectionId[] = ["contact", "skills", "research", "about"];
+      const order: SectionId[] = ["contact", "future", "experiences", "about", "intro"];
       for (const id of order) {
         const el = sectionRefs.current[id];
         if (el && y >= el.offsetTop) {
@@ -246,23 +253,11 @@ export default function App() {
               </button>
             ))}
           </div>
-
-          <a
-            href="#"
-            className={`hidden md:flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-md transition-all ${
-              navSolid
-                ? "bg-primary text-primary-foreground hover:opacity-90"
-                : "border border-white/30 text-white hover:bg-white/10"
-            }`}
-          >
-            <Download size={13} />
-            CV
-          </a>
         </div>
       </nav>
 
-      {/* ── Hero ── */}
-      <section className="relative min-h-screen flex items-center bg-primary overflow-hidden">
+      {/* ── Hero / Intro ── */}
+      <section ref={setRef("intro")} id="intro" className="relative min-h-screen flex items-center bg-primary overflow-hidden py-24">
         {/* Grid texture */}
         <div className="absolute inset-0 opacity-[0.04]">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -278,7 +273,7 @@ export default function App() {
         <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full bg-accent/15 blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full bg-accent/8 blur-[80px] pointer-events-none" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 py-28 w-full">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 w-full">
           <div className="max-w-2xl">
             <div
               className={heroDelay(100)}
@@ -286,7 +281,7 @@ export default function App() {
             >
               <span className="inline-flex items-center gap-3 text-accent font-mono text-xs tracking-[0.2em] uppercase mb-8">
                 <span className="w-10 h-px bg-accent" />
-                Grade 10 IB · Chaman Bhartiya School
+                Grade 10, IB · Chaman Bhartiya School
               </span>
             </div>
 
@@ -318,7 +313,7 @@ export default function App() {
               style={{ transitionDelay: "560ms" }}
             >
               <button
-                onClick={() => scrollTo("research")}
+                onClick={() => scrollTo("experiences")}
                 className="group flex items-center gap-2 px-6 py-3 bg-accent text-white font-medium rounded-md hover:bg-accent/90 transition-all duration-200 hover:gap-3"
               >
                 View Projects <ArrowRight size={15} />
@@ -330,58 +325,35 @@ export default function App() {
                 Get In Touch
               </button>
             </div>
+          </div>
 
-            <div
-              className={`mt-12 flex items-center gap-6 ${heroDelay(600)}`}
-              style={{ transitionDelay: "680ms" }}
+          {/* Interactive Intro Section */}
+          <div className={`mt-20 max-w-3xl ${heroDelay(700)}`} style={{ transitionDelay: "700ms" }}>
+            <button 
+              onClick={() => setIntroOpen(!introOpen)}
+              className="flex items-center gap-3 text-white/80 hover:text-white font-display text-xl transition-colors border-b border-white/20 pb-2 w-full text-left"
             >
-              {[
-                { Icon: Github, label: "GitHub", href: "#" },
-                { Icon: Linkedin, label: "LinkedIn", href: "#" },
-                { Icon: Mail, label: "Email", href: "mailto:agarwalpraapti736@gmail.com" },
-              ].map(({ Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  className="flex items-center gap-2 text-white/40 hover:text-white/75 transition-colors duration-200"
-                >
-                  <Icon size={17} />
-                  <span className="font-mono text-xs tracking-wide">{label}</span>
-                </a>
-              ))}
+              Read My Intro {introOpen ? <ChevronUp size={20} className="text-accent"/> : <ChevronDown size={20} className="text-accent"/>}
+            </button>
+            
+            <div className={`transition-all duration-500 ease-in-out overflow-hidden ${introOpen ? 'max-h-[1000px] opacity-100 mt-6' : 'max-h-0 opacity-0'}`}>
+              <div className="space-y-6 text-white/60 leading-relaxed text-sm md:text-base pr-4">
+                <p>
+                  When I was in second grade, my uncle brought home a DIY solar system kit for my brother and me. We spent the afternoon painting the models, but what actually changed everything was the small booklet I found at the bottom of the box. It was entirely about space—page after page of raw facts and astronomy. For a seven-year-old, it was mind-blowing. It was the first thing that showed me something real outside of my own bubble. That was the exact moment my brain clicked. It wasn't just about planets—it was the sudden realization that there is a massive, complex system governing the universe, and we can actually understand it. That little paper booklet is where my obsession with science started; it turned me into a kid who constantly needed to know the mechanics behind how our physical world works.
+                </p>
+                <p>
+                  That drive to deconstruct and understand things became my greatest survival tool. I've changed schools seven times in my life, spending most of my childhood in Canada before making the biggest jump—moving to Bangalore when I was thirteen. Going from a familiar neighborhood to a completely new city and school system was jarring. But having to restart so many times taught me something critical: I approach new environments exactly the way I approach science. I observe, look for the patterns, and figure out the mechanics of my surroundings. Even when I'm dropped into a situation where nothing makes sense yet, I know how to break it down, adapt, and find my footing.
+                </p>
+                <p>
+                  Being from a Marwari family, I grew up around people who think about how the world works in a very practical way. Business talk at family dinners, questions about value and ideas and "what problem does this solve?" That's just normal in my house. I think that's where my brain for building things and pitching projects comes from — it's been around me my whole life, even before I knew what entrepreneurship meant. Today, that's exactly where my two sides meet: I have the scientific curiosity to obsess over how the universe works, and the ingrained, practical business sense to build things that actually fix problems.
+                </p>
+              </div>
             </div>
           </div>
-
-          {/* Stats row */}
-          <div
-            className={`mt-20 flex gap-10 ${heroDelay(700)}`}
-            style={{ transitionDelay: "800ms" }}
-          >
-            {[
-              { value: "6+", label: "Competitions" },
-              { value: "2", label: "First Places" },
-              { value: "2", label: "Countries" },
-            ].map(({ value, label }) => (
-              <div key={label} className="border-l border-white/15 pl-5">
-                <div className="font-display text-3xl font-semibold text-white">{value}</div>
-                <div className="font-mono text-[10px] text-white/40 uppercase tracking-[0.15em] mt-1">
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
-
-        <button
-          onClick={() => scrollTo("about")}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/35 hover:text-white/65 transition-colors animate-bounce"
-          aria-label="Scroll down"
-        >
-          <ChevronDown size={28} />
-        </button>
       </section>
 
-      {/* ── About ── */}
+      {/* ── About Me ── */}
       <section
         ref={setRef("about")}
         id="about"
@@ -399,32 +371,27 @@ export default function App() {
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <div>
               <Reveal delay={80}>
-                <p className="text-base md:text-lg leading-relaxed text-muted-foreground mb-5">
-                  When I was in second grade, my uncle brought home a DIY solar system kit. We spent
-                  the afternoon painting the models, but it was the small booklet at the bottom of
-                  the box — page after page of raw astronomy — that changed everything. For a
-                  seven-year-old, it was mind-blowing. That was the exact moment I realised there is
-                  a massive, complex system governing the universe, and we can actually understand it.
+                <p className="text-base leading-relaxed text-muted-foreground mb-5">
+                  Science is what I keep coming back to, especially fields such as chemistry, physics, biology, astronomy, and psychology. I have developed interests in these subjects because all of my curiosity comes from wanting to learn about the world deeply, and these subjects help me understand everything from the formation of matter and life to human behavior and all the complex systems. I love exploring how different branches of science are interconnected and work together to explain the universe we exist in. Learning how discoveries across multiple scientific fields collectively shape our understanding of existence, the laws of nature, and the processes that have created the world around us is what really excited me.
                 </p>
               </Reveal>
               <Reveal delay={180}>
-                <p className="text-base md:text-lg leading-relaxed text-muted-foreground mb-9">
-                  I have changed schools seven times, spending most of my childhood in Canada before
-                  moving to Bangalore at thirteen. Restarting so many times taught me something
-                  critical: I approach new environments exactly the way I approach science — observe,
-                  find the patterns, and figure out the mechanics. Growing up in a Marwari family
-                  where business and problem-solving are dinner-table conversations gave me a second
-                  lens: the scientific curiosity to obsess over how things work, and the practical
-                  instinct to build things that actually fix problems.
+                <p className="text-base leading-relaxed text-muted-foreground mb-5">
+                  Alongside science, I've also been paying a lot of attention to AI lately. I really like exploring how AI is transforming fields such as medicine, engineering, research, and scientific development. What interests me about technology is its ability to expand human capabilities, improve efficiency, increase the speed of discovery significantly, and create entirely new possibilities for many different fields. I want to understand how that happens, not just hear about it. I never looked at the world from one perspective. I enjoy learning through different fields because each one explains the reality we live in, in a different way.
                 </p>
               </Reveal>
               <Reveal delay={280}>
-                <div className="grid grid-cols-2 gap-3">
+                <p className="text-base leading-relaxed text-muted-foreground mb-9">
+                  But I'm not just a science person, I am also deeply interested in art. I draw, paint, do textured art, crochet, knit, macramé, dance, and play the piano. Honestly, I think my creative side and my science side help each other. When I'm crocheting something tricky, I'm problem-solving. When I'm painting, I notice tiny details I'd miss otherwise. The patience I build doing art is the same patience I need during a chess game or when a science project isn't working. I read a lot too. Science books, psychology, some self-improvement, and fantasy fiction when I need a break from reality. Everything I do kind of comes from the same reason — I just really like understanding how things work. And then there's badminton — which is the opposite of patience. It's fast and loud and my brain kind of shuts off in a good way, it helps me stay active and focused. Chess is the other end — slow, quiet, everything happening inside your head. It challenges me to think strategically, stay patient, and analyze situations carefully. I like that I need both.
+                </p>
+              </Reveal>
+              <Reveal delay={380}>
+                <div className="grid grid-cols-2 gap-4">
                   {[
                     { Icon: MapPin, text: "Bangalore, India" },
                     { Icon: BookOpen, text: "Grade 10, IB Programme" },
-                    { Icon: Award, text: "Multiple Award Winner" },
-                    { Icon: Atom, text: "Science & Innovation" },
+                    { Icon: Code, text: "Creative Arts" },
+                    { Icon: Atom, text: "Sciences" },
                   ].map(({ Icon, text }) => (
                     <div
                       key={text}
@@ -441,116 +408,58 @@ export default function App() {
             <Reveal from="right" delay={120}>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&h=700&fit=crop&auto=format"
-                  alt="Science laboratory with glassware and equipment"
-                  className="w-full rounded-xl object-cover aspect-[4/5] bg-muted"
+                  src="/galaxy-math.jpg"
+                  alt="Galaxy with mathematical equations"
+                  className="w-full rounded-xl object-cover aspect-[4/5] bg-muted shadow-lg"
                 />
                 <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/8" />
-                <div className="absolute -bottom-5 -left-5 bg-card border border-border rounded-xl p-4 shadow-xl">
-                  <div className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest mb-1">
-                    Latest Achievement
-                  </div>
-                  <div className="text-sm font-semibold text-foreground">
-                    1st Place · Lobachevsky International
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-0.5">
-                    Lomonosov Moscow State University
-                  </div>
-                </div>
               </div>
             </Reveal>
           </div>
-
-          {/* Education */}
-          <Reveal delay={150} className="mt-24">
-            <h3 className="font-display text-xl font-semibold mb-10">Education</h3>
-            <div className="space-y-7 border-l-2 border-border pl-7">
-              {[
-                {
-                  year: "2024 – Present",
-                  title: "Grade 10, IB Programme",
-                  institution: "Chaman Bhartiya School, Bangalore",
-                  note: "Sciences, Mathematics, Business · Bangalore, India",
-                },
-                {
-                  year: "2019 – 2024",
-                  title: "Primary & Middle School",
-                  institution: "Multiple Schools — Canada & India",
-                  note: "Attended 7 schools across Canada and India · developed strong adaptability and cross-cultural perspective",
-                },
-              ].map((edu, i) => (
-                <div key={i} className="relative">
-                  <span className="absolute -left-[35px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent border-2 border-background" />
-                  <div className="font-mono text-xs text-muted-foreground mb-1 tracking-wide">
-                    {edu.year}
-                  </div>
-                  <div className="font-semibold text-foreground">{edu.title}</div>
-                  <div className="text-accent text-sm mt-0.5">{edu.institution}</div>
-                  <div className="text-muted-foreground text-sm mt-0.5">{edu.note}</div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
         </div>
       </section>
 
-      {/* ── Projects ── */}
+      {/* ── Experiences & Achievements ── */}
       <section
-        ref={setRef("research")}
-        id="research"
+        ref={setRef("experiences")}
+        id="experiences"
         className="py-28 bg-secondary/40"
       >
         <div className="max-w-6xl mx-auto px-6">
           <Reveal>
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-4 mb-14">
               <span className="font-mono text-accent text-sm tracking-[0.15em]">02</span>
-              <h2 className="font-display text-3xl font-semibold">Projects</h2>
+              <h2 className="font-display text-3xl font-semibold">Experiences & Achievements</h2>
               <div className="flex-1 h-px bg-border" />
             </div>
-            <p className="text-muted-foreground mb-14 max-w-lg text-sm">
-              Selected competition projects spanning renewable energy, chemistry, and agricultural
-              technology.
-            </p>
           </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {projects.map((project, i) => (
-              <Reveal key={project.id} delay={i * 110} from="bottom">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {experiences.map((exp, i) => (
+              <Reveal key={exp.id} delay={(i % 3) * 110} from="bottom">
                 <div className="group bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:border-accent/25 transition-all duration-300 h-full flex flex-col cursor-default">
                   <div className="flex items-start justify-between mb-5">
                     <div className="p-2.5 rounded-lg bg-accent/10">
-                      <project.Icon size={19} className="text-accent" />
+                      <exp.Icon size={19} className="text-accent" />
                     </div>
-                    <span
-                      className={`text-[11px] font-mono px-2.5 py-1 rounded-full border ${
-                        statusStyles[project.status]
-                      }`}
-                    >
-                      {project.status}
-                    </span>
                   </div>
 
                   <div className="font-mono text-[11px] text-accent uppercase tracking-[0.12em] mb-2">
-                    {project.category} · {project.year}
+                    {exp.category}
                   </div>
 
                   <h3 className="font-display text-[15px] font-semibold leading-snug mb-3 group-hover:text-accent transition-colors duration-200">
-                    {project.title}
+                    {exp.title}
                   </h3>
 
                   <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    {project.description}
+                    {exp.description}
                   </p>
 
                   <div className="mt-5 flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[11px] font-mono px-2 py-0.5 bg-muted text-muted-foreground rounded"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                    <span className="text-[11px] font-mono px-2 py-0.5 bg-muted text-muted-foreground rounded">
+                      {exp.tag}
+                    </span>
                   </div>
 
                   <button className="mt-5 flex items-center gap-1.5 text-xs text-accent font-medium hover:gap-3 transition-all duration-200">
@@ -563,92 +472,35 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── Skills ── */}
+      {/* ── Future Goals ── */}
       <section
-        ref={setRef("skills")}
-        id="skills"
-        className="py-28 bg-background"
+        ref={setRef("future")}
+        id="future"
+        className="py-28 bg-background relative overflow-hidden"
       >
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-4xl mx-auto px-6">
           <Reveal>
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-16">
               <span className="font-mono text-accent text-sm tracking-[0.15em]">03</span>
-              <h2 className="font-display text-3xl font-semibold">Skills</h2>
-              <div className="flex-1 h-px bg-border" />
+              <h2 className="font-display text-4xl font-semibold">Future Goals</h2>
+              <div className="w-12 h-px bg-border" />
             </div>
-            <p className="text-muted-foreground mb-14 max-w-lg text-sm">
-              Scientific curiosity, creative expression, and strategic thinking — all feeding
-              into the same engine.
-            </p>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-5">
-            {skillCategories.map((cat, i) => (
-              <Reveal key={cat.name} delay={i * 90}>
-                <div className="p-6 bg-card border border-border rounded-xl hover:border-accent/20 transition-colors duration-200">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="p-2 rounded-lg bg-accent/10">
-                      <cat.Icon size={17} className="text-accent" />
-                    </div>
-                    <h3 className="font-display font-semibold text-[15px]">{cat.name}</h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {cat.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="font-mono text-[12px] px-2.5 py-1.5 bg-secondary text-secondary-foreground border border-border rounded-md hover:border-accent/40 hover:text-accent transition-colors duration-150 cursor-default"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          {/* Awards */}
-          <Reveal delay={180} className="mt-16">
-            <div className="flex items-center gap-4 mb-8">
-              <Award size={16} className="text-accent" />
-              <h3 className="font-display text-xl font-semibold">Awards &amp; Honours</h3>
-            </div>
-            <div className="grid md:grid-cols-3 gap-4">
-              {[
-                {
-                  year: "2024",
-                  title: "Harvard Crimson Business Competition",
-                  org: "Advanced to next round — invitation to Harvard University, USA",
-                },
-                {
-                  year: "2024",
-                  title: "Best Speaker — Interhouse Debate",
-                  org: "Chaman Bhartiya School, Bangalore",
-                },
-                {
-                  year: "2024",
-                  title: "2nd Place — CBS Triumph Chess Competition",
-                  org: "Chaman Bhartiya School, Bangalore",
-                },
-              ].map((award, i) => (
-                <Reveal key={i} delay={i * 80}>
-                  <div className="p-5 bg-muted/60 border border-border rounded-xl hover:border-accent/20 transition-colors duration-200">
-                    <div className="font-mono text-[11px] text-accent mb-2 tracking-wide">
-                      {award.year}
-                    </div>
-                    <div className="font-semibold text-sm text-foreground leading-snug">
-                      {award.title}
-                    </div>
-                    <div className="text-[12px] text-muted-foreground mt-1.5">{award.org}</div>
-                  </div>
-                </Reveal>
-              ))}
+          <Reveal delay={80} from="bottom">
+            <div className="text-center space-y-6">
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                I hope to continue exploring scientific research.
+              </p>
+              <p className="text-muted-foreground leading-relaxed text-lg">
+                I don't have one specific career picked out yet, and I'm okay with that. But the question I keep coming back to is: how can we use what we already know in smarter ways to fix the things that aren't working? Climate, energy, healthcare — I don't know where exactly I'll end up. But in five years, I want to be deep into research and drive new discoveries, shape the future of technology and science, create long-term impact on both humanity and the world around us.
+              </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── Contact ── */}
+      {/* ── Contact Info ── */}
       <section
         ref={setRef("contact")}
         id="contact"
@@ -666,127 +518,53 @@ export default function App() {
         </div>
         <div className="absolute top-0 right-1/3 w-96 h-96 rounded-full bg-accent/10 blur-[100px] pointer-events-none" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
           <Reveal>
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-16">
               <span className="font-mono text-accent text-sm tracking-[0.15em]">04</span>
-              <h2 className="font-display text-3xl font-semibold text-white">Contact</h2>
-              <div className="flex-1 h-px bg-white/15" />
+              <h2 className="font-display text-4xl font-semibold text-white">Contact Info</h2>
+              <div className="w-12 h-px bg-white/15" />
             </div>
-            <p className="text-white/50 mb-16 max-w-lg text-sm">
-              Interested in collaboration, competitions, or just want to talk about science?
-              I would love to hear from you.
-            </p>
           </Reveal>
 
-          <div className="grid md:grid-cols-2 gap-16">
-            <Reveal from="left" delay={80}>
-              <div className="space-y-6">
-                {[
-                  {
-                    Icon: Mail,
-                    label: "Email",
-                    value: "agarwalpraapti736@gmail.com",
-                    href: "mailto:agarwalpraapti736@gmail.com",
-                  },
-                  {
-                    Icon: BookOpen,
-                    label: "School",
-                    value: "Chaman Bhartiya School, Bangalore",
-                    href: null,
-                  },
-                  {
-                    Icon: Github,
-                    label: "GitHub",
-                    value: "github.com/praaptiagarwal",
-                    href: "#",
-                  },
-                  {
-                    Icon: MapPin,
-                    label: "Location",
-                    value: "Bangalore, India",
-                    href: null,
-                  },
-                ].map(({ Icon, label, value, href }) => (
-                  <div key={label} className="flex items-center gap-4">
-                    <div className="p-2.5 rounded-lg bg-white/10 flex-shrink-0">
-                      <Icon size={17} className="text-white/70" />
-                    </div>
-                    <div>
-                      <div className="font-mono text-[10px] text-white/35 uppercase tracking-widest">
-                        {label}
-                      </div>
-                      {href ? (
-                        <a
-                          href={href}
-                          className="text-white/80 hover:text-accent transition-colors text-sm"
-                        >
-                          {value}
-                        </a>
-                      ) : (
-                        <span className="text-white/80 text-sm">{value}</span>
-                      )}
-                    </div>
+          <Reveal delay={160} from="bottom">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-10 md:p-14 backdrop-blur-sm shadow-xl">
+              <div className="grid sm:grid-cols-2 gap-y-8 gap-x-12 max-w-2xl mx-auto">
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Name</span>
+                  <span className="text-white font-medium text-lg">Praapti Agarwal</span>
+                </div>
+                
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Education</span>
+                  <span className="text-white font-medium text-lg">Grade 10, IB</span>
+                  <span className="text-white/70 text-sm">Chaman Bhartiya School</span>
+                </div>
+                
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Email</span>
+                  <a href="mailto:agarwalpraapti736@gmail.com" className="text-accent hover:text-white transition-colors text-lg">
+                    agarwalpraapti736@gmail.com
+                  </a>
+                </div>
+                
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Phone</span>
+                  <div className="flex flex-col gap-1">
+                    <a href="tel:8019867512" className="text-white hover:text-accent transition-colors text-lg">8019867512</a>
+                    <a href="tel:8074214378" className="text-white hover:text-accent transition-colors text-lg">80742 14378</a>
                   </div>
-                ))}
+                </div>
               </div>
-            </Reveal>
-
-            <Reveal from="right" delay={120}>
-              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { label: "Name", type: "text", placeholder: "Your name" },
-                    { label: "Email", type: "email", placeholder: "your@email.com" },
-                  ].map(({ label, type, placeholder }) => (
-                    <div key={label}>
-                      <label className="block font-mono text-[10px] text-white/40 uppercase tracking-widest mb-1.5">
-                        {label}
-                      </label>
-                      <input
-                        type={type}
-                        placeholder={placeholder}
-                        className="w-full bg-white/8 border border-white/15 text-white rounded-md px-4 py-2.5 text-sm placeholder:text-white/25 focus:outline-none focus:border-accent/50 transition-colors"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <label className="block font-mono text-[10px] text-white/40 uppercase tracking-widest mb-1.5">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Collaboration enquiry"
-                    className="w-full bg-white/8 border border-white/15 text-white rounded-md px-4 py-2.5 text-sm placeholder:text-white/25 focus:outline-none focus:border-accent/50 transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block font-mono text-[10px] text-white/40 uppercase tracking-widest mb-1.5">
-                    Message
-                  </label>
-                  <textarea
-                    rows={5}
-                    placeholder="Tell me about your project or enquiry..."
-                    className="w-full bg-white/8 border border-white/15 text-white rounded-md px-4 py-2.5 text-sm placeholder:text-white/25 focus:outline-none focus:border-accent/50 transition-colors resize-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="group flex items-center gap-2 px-6 py-3 bg-accent text-white font-medium rounded-md hover:bg-accent/90 hover:gap-3 transition-all duration-200"
-                >
-                  Send Message <ArrowRight size={15} />
-                </button>
-              </form>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ── Footer ── */}
       <footer className="py-5 bg-primary border-t border-white/8">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span className="font-display text-white/30 text-sm">© 2025 Praapti Agarwal</span>
+          <span className="font-display text-white/30 text-sm">© 2026 Praapti Agarwal</span>
           <span className="font-mono text-white/20 text-xs">
             Chaman Bhartiya School · Grade 10 IB · Bangalore
           </span>
